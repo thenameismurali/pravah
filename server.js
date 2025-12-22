@@ -12,7 +12,8 @@ app.use(
   cors({
     origin: [
       "https://taupe-banoffee-9b6829.netlify.app",
-      "https://strong-praline-19bdfb.netlify.app"
+      "https://strong-praline-19bdfb.netlify.app",
+      "https://elegant-belekoy-b190c7.netlify.app"
     ],
     credentials: true,
   })
