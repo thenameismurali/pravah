@@ -6,9 +6,10 @@ app.use(express.json());
 
 const connectDb = require("./config/dbconfig");
 const authRoute=require("./routes/auth");
-app.use(cors({
-  origin: "http://localhost:5173", // Vite default
-  credentials: true
+app.use(
+  cors({
+    origin: "https://strong-praline-19bdfb.netlify.app",
+    credentials: true,
 }));
 
 connectDb();
