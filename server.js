@@ -10,9 +10,13 @@ const adminRoute =require("./routes/admin");
 const eventRoute = require("./routes/event");
 app.use(
   cors({
-    origin: "https://strong-praline-19bdfb.netlify.app",
+    origin: [
+      "https://taupe-banoffee-9b6829.netlify.app",
+      "https://strong-praline-19bdfb.netlify.app"
+    ],
     credentials: true,
-}));
+  })
+);
 
 connectDb();
 app.use("/api/auth",authRoute);
