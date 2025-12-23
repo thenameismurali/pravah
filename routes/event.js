@@ -9,7 +9,7 @@ const router = express.Router();
  */
 router.post("/", async (req, res) => {
   try {
-    const { project, date, time, venue, desc, latitude, longitude } = req.body;
+    const { project, date, time, venue, desc, mapLink } = req.body;
 
     // Validation
     if (
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
       !time ||
       !venue ||
       !desc ||
-      !location
+      !mapLink
     ) {
       return res.status(400).json({
         success: false,

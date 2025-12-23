@@ -7,7 +7,7 @@ const eventSchema = new mongoose.Schema(
     time: { type: String, required: true },
     venue: { type: String, required: true },
     desc: { type: String, required: true },
-    location:{type:String,required:true},
+    mapLink:{type:String,required:true},
   },
   { timestamps: true }
 );
