@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
       venue,
       desc,
 
-      location,
+      mapLink,
     });
 
     res.status(201).json({
