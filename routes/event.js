@@ -52,22 +52,17 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * GET: Fetch all events
+ * GET: Fetch all events OR events by date
  * URL: GET /api/events
+ * URL: GET /api/events?date=YYYY-MM-DD
  */
 router.get("/", async (req, res) => {
   try {
     const { date } = req.query;
 
-    let events;
-
-    if (date) {
-      // fetch events for a specific date
-      events = await Event.find({ date });
-    } else {
-      // fetch all events
-      events = await Event.find().sort({ createdAt: -1 });
-    }
+    const events = date
+      ? await Event.find({ date })
+      : await Event.find().sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -82,6 +77,7 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
 /**
  * GET: Fetch all event dates (for calendar dots)
  * URL: GET /api/events/dates
@@ -89,8 +85,6 @@ router.get("/", async (req, res) => {
 router.get("/dates", async (req, res) => {
   try {
     const events = await Event.find().select("date -_id");
-
-    // remove duplicates
     const uniqueDates = [...new Set(events.map(e => e.date))];
 
     res.status(200).json(uniqueDates);
@@ -103,5 +97,65 @@ router.get("/dates", async (req, res) => {
   }
 });
 
+/**
+ * PUT: Update an event
+ * URL: PUT /api/events/:id
+ */
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Event updated successfully",
+      data: updatedEvent,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
+/**
+ * DELETE: Delete an event
+ * URL: DELETE /api/events/:id
+ */
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedEvent = await Event.findByIdAndDelete(req.params.id);
+
+    if (!deletedEvent) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Event deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
 
 module.exports = router;
