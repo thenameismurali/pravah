@@ -6,8 +6,8 @@ const User = require("../models/User");
 const router = express.Router();
 router.post('/signup',async(req,res)=>{
     try{
-          const { fullname, email, password, institution } = req.body;
-        if(!fullname||!email||!password||!institution){
+          const { fullname, email, password, institution,role } = req.body;
+        if(!fullname||!email||!password||!institution|!role){
             return res.status(400).json({message:"All fields are required"});
         }
         const existingUser =await User.findOne({email});
@@ -20,6 +20,7 @@ router.post('/signup',async(req,res)=>{
             email,
             password:hashedpassword,
             institution,
+            role,
         });
         res.status(201).json({message:"user registered successfully"});
 
