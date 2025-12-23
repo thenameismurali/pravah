@@ -18,8 +18,7 @@ router.post("/", async (req, res) => {
       !time ||
       !venue ||
       !desc ||
-      latitude === undefined ||
-      longitude === undefined
+      !location
     ) {
       return res.status(400).json({
         success: false,
@@ -33,8 +32,8 @@ router.post("/", async (req, res) => {
       time,
       venue,
       desc,
-      latitude,
-      longitude,
+
+      location,
     });
 
     res.status(201).json({

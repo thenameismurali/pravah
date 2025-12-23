@@ -7,8 +7,7 @@ const eventSchema = new mongoose.Schema(
     time: { type: String, required: true },
     venue: { type: String, required: true },
     desc: { type: String, required: true },
-    latitude: { type: Number, required: true },   // ✅ FIXED
-    longitude: { type: Number, required: true },
+    location:{type:String,required:true},
   },
   { timestamps: true }
 );
